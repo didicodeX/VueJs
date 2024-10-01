@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,30 +9,32 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 </head>
+
 <body>
   <div id="app">
     <div class="container">
       <form>
+        
         <fieldset>
           <legend>Filtre sur le nom</legend>
-          <input type="text">
+          <input type="text" @input="filterName()" v-model="searchQuery">
         </fieldset>
 
         <fieldset>
           <legend>options</legend>
           <div class="input-box">
             <label for="homme">Homme</label>
-            <input type="checkbox" id="homme" v-model="showMale" @change="filterGender">
+            <input type="checkbox" id="homme" v-model="showMale" @change="filterGender()">
           </div>
 
           <div class="input-box">
             <label for="femme">Femme</label>
-            <input type="checkbox" id="femme" v-model="showFemale" @change="filterGender">
+            <input type="checkbox" id="femme" v-model="showFemale" @change="filterGender()">
           </div>
 
           <div class="input-box">
             <label for="telephone">Telephone</label>
-            <input type="checkbox" id="telephone" v-model="hidePhone">
+            <input type="checkbox" id="telephone" v-model="showPhone">
           </div>
 
           <div class="input-box">
@@ -53,16 +56,19 @@
 
       <div class="people__container">
         <div :class="{mef:style}" class="person" v-for="(person, i) in filteredPeople" :key="i">
+
           <img v-if="size === 'large'" :src="person.picture.large">
           <img v-else-if="size === 'medium'" :src="person.picture.medium">
           <img v-else :src="person.picture.thumbnail">
           <div class="person__infos">
-            <span class="person__title">{{person.name.title}}</span>
-            <span class="person__phone" :class="{phone:hidePhone}">Telephone {{person.phone}}</span>
+            <span class="person__name">{{person.name.title}} {{person.name.first}} {{person.name.last}}</span>
+            <span class="person__phone" :class="{hidePhone:!showPhone}">Telephone {{person.phone}}</span>
             <span class="person__country">Pays {{person.location.country}}</span>
           </div>
+
         </div>
       </div>
+
     </div>
   </div>
 
@@ -70,9 +76,10 @@
     const app = Vue.createApp({
       data() {
         return {
+          searchQuery: '',
           people: [],
           style: false,
-          hidePhone: false,
+          showPhone: true,
           size: 'large',
           showMale: true,
           showFemale: true,
@@ -100,6 +107,11 @@
             }
             return false;
           });
+        },
+        filterName() {
+          this.filteredPeople = this.people.filter(person =>
+            person.name.last.toLowerCase().includes(this.searchQuery.toLowerCase())
+          );
         }
       },
       mounted() {
@@ -116,9 +128,11 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-    .phone {
+
+    .hidePhone {
       display: none;
     }
+
     .person {
       display: flex;
       column-gap: 10px;
@@ -128,6 +142,7 @@
       width: 390px;
       border: 2px solid transparent;
     }
+
     .mef {
       background-color: #47546f60;
       border: 2px solid #47546f60;
@@ -136,16 +151,19 @@
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 1.1rem;
     }
+
     .person__infos {
       display: flex;
       flex-direction: column;
       padding: 0 2px;
     }
+
     .input-box {
       display: flex;
       align-items: center;
       gap: 10px;
     }
+
     select {
       width: 140px;
       height: 40px;
@@ -153,9 +171,11 @@
       cursor: pointer;
       margin-bottom: -1px;
     }
+
     label {
       cursor: pointer;
     }
+
     fieldset {
       border: 1px solid #9e9c9caa;
       padding: 20px;
@@ -165,9 +185,11 @@
       flex-wrap: wrap;
       gap: 20px;
     }
+
     legend {
       padding: 0 10px;
     }
   </style>
 </body>
+
 </html>
