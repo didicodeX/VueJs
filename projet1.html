@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <form>
+        <fieldset>
+          <legend>Filtre sur le nom</legend>
+          <input type="text">
+        </fieldset>
+
+        <fieldset>
+          <legend>options</legend>
+          <div class="input-box">
+            <label for="homme">Homme</label>
+            <input type="checkbox" id="homme" v-model="showMale" @change="filterGender">
+          </div>
+
+          <div class="input-box">
+            <label for="femme">Femme</label>
+            <input type="checkbox" id="femme" v-model="showFemale" @change="filterGender">
+          </div>
+
+          <div class="input-box">
+            <label for="telephone">Telephone</label>
+            <input type="checkbox" id="telephone" v-model="hidePhone">
+          </div>
+
+          <div class="input-box">
+            <label for="size">Photo</label>
+            <select required id="size" v-model="size">
+              <option disabled value="">size</option>
+              <option value="large">Grand</option>
+              <option value="medium">Moyen</option>
+              <option value="thumbnail">Petit</option>
+            </select>
+          </div>
+
+          <div class="input-box">
+            <label for="style">Mise en forme</label>
+            <input type="checkbox" id="style" v-model="style">
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="people__container">
+        <div :class="{mef:style}" class="person" v-for="(person, i) in filteredPeople" :key="i">
+          <img v-if="size === 'large'" :src="person.picture.large">
+          <img v-else-if="size === 'medium'" :src="person.picture.medium">
+          <img v-else :src="person.picture.thumbnail">
+          <div class="person__infos">
+            <span class="person__title">{{person.name.title}}</span>
+            <span class="person__phone" :class="{phone:hidePhone}">Telephone {{person.phone}}</span>
+            <span class="person__country">Pays {{person.location.country}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          people: [],
+          style: false,
+          hidePhone: false,
+          size: 'large',
+          showMale: true,
+          showFemale: true,
+          filteredPeople: []
+        }
+      },
+      methods: {
+        async fetchPeople() {
+          try {
+            const response = await fetch('people.json');
+            const data = await response.json();
+            this.people = data;
+            this.filterGender(); // Appliquer le filtre après le chargement des données
+          } catch (error) {
+            console.error("Erreur lors du chargement des personnes : ", error);
+          }
+        },
+        filterGender() {
+          this.filteredPeople = this.people.filter(person => {
+            if (this.showMale && person.gender === 'male') {
+              return true;
+            }
+            if (this.showFemale && person.gender === 'female') {
+              return true;
+            }
+            return false;
+          });
+        }
+      },
+      mounted() {
+        this.fetchPeople();
+      }
+    });
+
+    const vm = app.mount('#app');
+  </script>
+
+  <style>
+    .people__container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .phone {
+      display: none;
+    }
+    .person {
+      display: flex;
+      column-gap: 10px;
+      backdrop-filter: blur(10px);
+      border-radius: 5px;
+      overflow: hidden;
+      width: 390px;
+      border: 2px solid transparent;
+    }
+    .mef {
+      background-color: #47546f60;
+      border: 2px solid #47546f60;
+      font-weight: bold;
+      font-style: italic;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 1.1rem;
+    }
+    .person__infos {
+      display: flex;
+      flex-direction: column;
+      padding: 0 2px;
+    }
+    .input-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    select {
+      width: 140px;
+      height: 40px;
+      padding: 0px;
+      cursor: pointer;
+      margin-bottom: -1px;
+    }
+    label {
+      cursor: pointer;
+    }
+    fieldset {
+      border: 1px solid #9e9c9caa;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    legend {
+      padding: 0 10px;
+    }
+  </style>
+</body>
+</html>
