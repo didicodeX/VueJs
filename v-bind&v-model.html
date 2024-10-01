@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+    <input type="text" v-model="texte1" v-on:keyup="recopie">
+    <input type="text" v-bind:value="texte2">
+
+    <fieldset class="container">
+      <legend>Language preferences : </legend>
+      <input type="checkbox" id="hindi" value="hindi" v-model="cases" />
+      <label for="hindi">Hindi</label>
+      <input type="checkbox" id="swahili" value="swahili" v-model="cases" />
+      <label for="swahili">Swahili</label>
+      <input type="checkbox" id="navi" value="navi" v-model="cases" />
+      <label for="navi">Na'vi</label>
+    </fieldset>
+    <span>Cases cochees : {{cases}}</span>
+    
+    
+    <fieldset>
+      <legend>Language preference:</legend>
+      <label>
+        <input type="radio" name="language" value="English" checked v-model="lang"/>
+        English
+      </label>
+      <label>
+        <input type="radio" name="language" value="French" v-model="lang"/>
+        French
+      </label>
+      <label>
+        <input type="radio" name="language" value="Mandarin" v-model="lang"/>
+        Mandarin
+      </label>
+    </fieldset>
+    <span>Langage prefere : {{lang}}</span>
+  </div>
+
+
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          texte1: '',
+          texte2: '',
+          lang: '',
+          cases: []
+        }
+      },
+      methods: {
+        recopie() {
+          this.texte2 = this.texte1.toUpperCase();
+        },
+        add(e) {
+          this.tabLang.push(e.target)
+        }
+      }
+    });
+    const vm = app.mount('#app');
+
+
+
+  </script>
+</body>
+
+</html>

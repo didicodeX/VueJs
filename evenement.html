@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+    <p>Nombre de click sur le button : {{nbClick}}</p>
+    <button @click="nbClick++">icrementer</button>
+
+    <div class="container">
+      <label>Enter your name</label>
+      <input type="text" v-model="name">
+      <button @click="show()">Click here</button>
+    </div>
+
+    <div class="container">
+      <label>Enter your name</label>
+      <input type="text" v-model="name">
+      <button @click="show('Bonjour')">Dis Bonjour</button>
+      <button @click="show('Hello')">Dis Hello</button>
+    </div>
+  </div>
+
+  <style>
+
+  </style>
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          nbClick: 0,
+          name: '',
+          // show(){
+          //   alert(`Bonjour ${this.name}`)
+          // },
+
+        }
+      },
+      methods: {
+        show(salutation) {
+          alert(`${salutation} ${this.name}`)
+        }
+      }
+
+    });
+    const vm = app.mount('#app');
+
+
+
+  </script>
+</body>
+
+</html>

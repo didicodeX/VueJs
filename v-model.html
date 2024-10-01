@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+  <!-- v-model fonctionne uniquement avec les balises de formulaire (input select) -->
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+  <div id="app">
+    <form action="">
+      <input type="text" name="" id="" placeholder="Enter your name" v-model="nom">
+      <p>Bonjour {{nom}}</p>
+    </form>
+
+    <p>Vous avez choisi {{capital}}</p>
+
+    <select v-model="capital" required>
+      <option selected disabled value="">
+        Select your favorite capital...
+      </option>
+      <option >Londre</option>
+      <option >Paris</option>
+      <option >Madrid</option>
+    </select>
+
+  </div>
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          nom: 'Tano',
+          capital: ''
+        }
+      }
+    });
+    const vm = app.mount('#app');
+
+
+
+  </script>
+</body>
+
+</html>

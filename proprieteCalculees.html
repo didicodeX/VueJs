@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{calc}}
+    {{date}}
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data(){
+        return{
+          d:15,
+          date: new Date(),
+
+          
+
+        } 
+      },
+      computed: {
+        calc(){
+          return this.d
+        }
+      }
+    });
+    app.mount('#app');
+
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes();
+    let seconds = new Date().getSeconds();
+
+    console.log(`${hours}:${minutes}:${seconds}`)
+  </script>
+</body>
+
+</html>

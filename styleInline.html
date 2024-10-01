@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+
+    <div class="container">
+      <fieldset>
+        couleur:
+        <select required v-model="couleur">
+          <option selected disabled value=""> choose your favorit color</option>
+          <option value="red">Rouge</option>
+          <option value="green">vert</option>
+          <option value="blue">bleu</option>
+        </select>
+      </fieldset>
+
+      <p :style="{color:couleur}">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, facilis animi nemo asperiores officia eos
+        dolore! Quas ex assumenda repellendus ullam, facilis culpa voluptatum fuga quos dignissimos odit at quis.
+      </p>
+    </div>
+
+  </div>
+
+  <style>
+    .red {
+      color: red;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .blue {
+      color: blue;
+    }
+  </style>
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          couleur: 'white'
+        }
+      },
+      methods: {
+
+      }
+    });
+    const vm = app.mount('#app');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+
+    <div class="container">
+      <div @keydown="actionParent">
+        <input type="text" @keydown="action($event)">
+      </div>
+    </div>
+
+    <div class="container">
+      <a href="https://www.bing.com" @click="link($event)">Bing</a>
+      <a href="https://www.google.com">Google Chrome</a>
+    </div>
+
+    <!-- Simplification avec les suffixes stop et prevent -->
+    <!-- .prevent ou .stop ou les deux  @keydown.prevent.stop -->
+    <!--  @click.once  signifie un seul click-->
+
+    <div class="container">
+      <div @keydown="actionParent">
+        <input type="text" @keydown.prevent.stop="action($event)">
+      </div>
+    </div>
+
+    <img src="./typewriter-8622984_640.jpg" :width="value" @click.left="width(200)" @click.right="width(100)"
+      @click.middle="width(400)" alt="">
+
+
+  </div>
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          value: 150
+        }
+      },
+      methods: {
+        width(value){
+          this.value = value;
+        }
+      }
+
+    });
+    const vm = app.mount('#app');
+
+
+
+  </script>
+</body>
+
+</html>

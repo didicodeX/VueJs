@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+
+    <div class="container">
+      <img src="./grasshopper-8203319_640.jpg" width="200" @mousemove="showCoord($event)">
+      <p>{{xy}}</p>
+    </div>
+
+  </div>
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          xy:''
+        }
+      },
+      methods: {
+        showCoord(e){
+          this.xy = `x= ${e.offsetX}, y= ${e.offsetY}`
+        }
+      }
+
+    });
+    const vm = app.mount('#app');
+
+
+
+  </script>
+</body>
+
+</html>

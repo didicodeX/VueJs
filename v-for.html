@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+
+<body>
+
+  <!-- 
+  v-bind dans une balise html pour la connecte a une propriete du model
+  v-model dans une balise html du formulaire pour relier son contenu a une propriete du model
+   -->
+
+  <div id="app">
+
+    <form class="container">
+      <p>Quels langage de programmation connaissez vous</p>
+      <input type="text" v-model="lang">
+      <input type="submit" value="valider" @click.prevent="add">
+      <div>{{languages}}</div>
+      <ul>
+        <li v-for="(lang, i) in languages" :key="i">
+          {{i}} - {{lang}}
+          <button type="button" @click="del(i)">Supprimer</button>
+        </li>
+      </ul>
+
+
+    </form>
+
+  </div>
+
+  <script>
+    // vue model
+    const app = Vue.createApp({
+      data() {
+        return {
+          lang: '',
+          languages: []
+        }
+      },
+      methods: {
+        add() {
+          if (this.lang.trim() !== '') { // Éviter les entrées vides
+            this.languages.push(this.lang);
+            this.lang = '';
+          }
+        },
+        // del(i) {
+        //   this.languages.splice(i, 1);
+        // },
+        del(index) {
+          this.languages = this.languages.filter((_, i) => i !== index);
+        }
+
+      }
+    });
+    const vm = app.mount('#app');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- v-text <=> innerText -->
+    <!-- v-html <=> innerHTML -->
+    <p v-text="texteBrut"></p>
+    <p v-html="texteHTML"></p>
+
+    <p>{{personne.prenom}} </p>
+    <p>{{personne.age}} </p>
+
+    <p>{{hms}} </p>
+
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          texteBrut: "Un simple texte",
+          texteHTML: "<p style='color: red'>rouge</p>",
+
+          personne: {
+            prenom: "Tano",
+            age: 12,
+          },
+          hms: ''
+        }
+      }
+    });
+   const vm = app.mount('#app');
+
+    setTimeout(() => {
+      vm.personne.age = 25;
+    }, 1000);
+
+    setInterval(() => {
+      vm.hms = new Date().toLocaleTimeString('fr');
+    }, 1000);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+<img :src="url" alt="">
+<div :id="id"> {{id}} </div>
+  </div>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          url: 'data:image/png;base64,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',
+          id: 20
+        }
+      }
+    });
+    app.mount('#app');
+
+
+  </script>
+</body>
+
+</html>
