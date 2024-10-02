@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div id="app">
+    <div class="max-w-7xl mx-auto">
+      <form class="mb-6 space-y-6">
+
+        <fieldset class="p-4 border border-gray-300 rounded-lg">
+          <legend class="px-2 text-lg font-bold">Filtre sur le nom</legend>
+          <input type="text" @input="filterName()" v-model="searchQuery" class="w-full p-2 border border-gray-300 rounded-lg">
+        </fieldset>
+
+        <fieldset class="p-4 border border-gray-300 rounded-lg">
+          <legend class="px-2 text-lg font-bold">Options</legend>
+          <div class="space-y-4">
+
+            <div class="flex items-center gap-2">
+              <label for="homme" class="text-gray-700">Homme</label>
+              <input type="checkbox" id="homme" v-model="showMale" @change="filterGender()" class="rounded">
+            </div>
+
+            <div class="flex items-center gap-2">
+              <label for="femme" class="text-gray-700">Femme</label>
+              <input type="checkbox" id="femme" v-model="showFemale" @change="filterGender()" class="rounded">
+            </div>
+
+            <div class="flex items-center gap-2">
+              <label for="telephone" class="text-gray-700">Téléphone</label>
+              <input type="checkbox" id="telephone" v-model="showPhone" class="rounded">
+            </div>
+
+            <div class="flex items-center gap-2">
+              <label for="size" class="text-gray-700">Photo</label>
+              <select required id="size" v-model="size" class="p-2 border border-gray-300 rounded-lg">
+                <option disabled value="">Taille</option>
+                <option value="large">Grand</option>
+                <option value="medium">Moyen</option>
+                <option value="thumbnail">Petit</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <label for="style" class="text-gray-700">Mise en forme</label>
+              <input type="checkbox" id="style" v-model="style" class="rounded">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div :class="{ 'font-bold italic bg-gray-200': style }" class="flex items-center p-4 border rounded-lg bg-white shadow-lg" v-for="(person, i) in filteredPeople" :key="i">
+          <img :src="person.picture[size]" class=" rounded-full border mr-4">
+          <div class="flex flex-col space-y-1">
+            <span class="text-lg font-semibold">{{ person.name.title }} {{ person.name.first }} {{ person.name.last }}</span>
+            <span v-if="showPhone" class="text-gray-500">Téléphone : {{ person.phone }}</span>
+            <span class="text-gray-500">Pays : {{ person.location.country }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          searchQuery: '',
+          people: [],
+          style: false,
+          showPhone: true,
+          size: 'large',
+          showMale: true,
+          showFemale: true,
+          filteredPeople: []
+        }
+      },
+      methods: {
+        async fetchPeople() {
+          try {
+            const response = await fetch('people.json');
+            const data = await response.json();
+            this.people = data;
+            this.filterGender();
+          } catch (error) {
+            console.error("Erreur lors du chargement des personnes : ", error);
+          }
+        },
+        filterGender() {
+          this.filteredPeople = this.people.filter(person => {
+            if (this.showMale && person.gender === 'male') {
+              return true;
+            }
+            if (this.showFemale && person.gender === 'female') {
+              return true;
+            }
+            return false;
+          });
+        },
+        filterName() {
+          this.filteredPeople = this.people.filter(person =>
+            person.name.last.toLowerCase().includes(this.searchQuery.toLowerCase())
+          );
+        }
+      },
+      mounted() {
+        this.fetchPeople();
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+
+</html>
