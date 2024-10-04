@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div id="app">
+<taille :mess="message"></taille>
+  </div>
+
+  <script>
+
+    //local component
+    const taille = {
+      template: `<div>{{mess}}</div>`,
+      props: ['mess']
+    }
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          message: "Yo bro on dit quoi"
+        }
+      },
+      components: {
+        'taille': taille
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+
+</html>

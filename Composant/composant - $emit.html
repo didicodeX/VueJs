@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div id="app">
+    <!-- <bienvenue @coucou="disBonjour()"></bienvenue><br> -->
+    <compteur @increment="addOne()"></compteur>
+    <compteur @increment="addOne()"></compteur>
+    <compteur @increment="addOne()"></compteur>
+    <!-- <compteur @increment="addOne()"></compteur> -->
+  </div>
+
+  <script>
+
+    // Quand je fait du dataBinding je return dans Vue.createApp
+    // Quand je definis une nouvelle attribu je return dans le composant
+    // pour manipuler des valeur du composant utilise data() dans le composant
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          total: 0
+        }
+      },
+      methods: {
+        disBonjour() {
+          console.log("Hello");
+        },
+      },
+
+    });
+
+    // app.component('bienvenue',{
+    //   template: `<button @click='$emit("coucou")'>dis bonjour</button>`,
+    // })
+    app.component('compteur', {
+      data() {
+        return {
+          valeur: 0
+        }
+      },
+      methods: {
+        addOne() {
+          this.valeur++;
+        },
+      },
+      template: `<button @click='$emit("increment")'>{{valeur}}</button>`,
+      props: ['nb']
+    })
+    app.mount('#app');
+  </script>
+</body>
+
+</html>

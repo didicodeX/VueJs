@@ -32,6 +32,8 @@
       template: `<div>{{nombre}}</div>`,
       props: ['max']
     }
+    // Global component app.component("componentName",{});
+
     // app.component("maj", {
     //   data() {
     //     return {
@@ -42,7 +44,6 @@
     //   props: ['texte']
     // });
 
-    // Global component app.component("componentName",{});
     const app = Vue.createApp({
       components: {
         'rnd-loc': RndLoc
