@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div id="app">
+    <maj texte="Texte a mettre en majuscules"></maj>
+    <rnd-loc max="10"></rnd-loc>
+    <rnd-loc max="100"></rnd-loc>
+    <rnd-loc max="1000"></rnd-loc>
+  </div>
+
+  <script>
+
+    //local component
+    const RndLoc = {
+      data() {
+        return {
+          nombre: Math.floor(Math.random() * this.max + 1)
+        }
+      },
+      template: `<div>{{nombre}}</div>`,
+      props: ['max']
+    }
+    // app.component("maj", {
+    //   data() {
+    //     return {
+    //       enMaj: this.texte.toUpperCase()
+    //     }
+    //   },
+    //   template: '<div>{{enMaj}}</div>',
+    //   props: ['texte']
+    // });
+
+    // Global component app.component("componentName",{});
+    const app = Vue.createApp({
+      components: {
+        'rnd-loc': RndLoc
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+
+</html>
