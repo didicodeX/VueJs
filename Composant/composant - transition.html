@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet 1-01</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+</head>
+
+<body class="container">
+  <div id="app" class="container">
+    <form @submit.prevent="addFruit()" class="container">
+      <input v-model="fruit" type="text" placeholder="Enter your favourite fruit">
+      <button style="height: 50px;">Add</button>
+    </form>
+    <!-- <div>{{tabFruit}}</div> -->
+    <div class="container">
+      <div>
+        <button @click="remove()">Delete first element</button>
+      </div>
+    </div>
+    <br><br>
+
+    <ul class="container">
+      <transition-group name="fade">
+        <li v-for="fruit in tabFruit" :key="fruit">
+          <span>{{fruit}}</span><button @click="removeFruit(fruit)">remove</button>
+        </li>
+      </transition-group>
+    </ul>
+    <br><br>
+  </div>
+
+  <script>
+
+    // Quand je fait du dataBinding je return dans Vue.createApp
+    // Quand je definis une nouvelle attribu je return dans le composant
+    // pour manipuler des valeur du composant utilise data() dans le composant
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          tabFruit: [],
+          fruit: ''
+        }
+      },
+      methods: {
+        addFruit() {
+          if (this.fruit.trim() !== '') {
+            this.tabFruit.push(this.fruit);
+            console.log(this.tabFruit);
+            this.fruit = '';
+          }
+        },
+        remove() {
+          this.tabFruit.shift();
+          console.log(this.tabFruit);
+        },
+        del(fruitToRemove) {
+          this.tabFruit = this.tabFruit.filter(fruit => fruit !== fruitToRemove);
+        },
+        removeFruit(fruitToRemove) {
+          const index = this.tabFruit.indexOf(fruitToRemove);
+          // return -1 si l'element n'est pas la
+          if (index != -1) { // Check if fruit exists before removing
+            this.tabFruit.splice(index, 1);
+          }
+        },
+      },
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+<style>
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+  form {
+    display: flex;
+    gap: 20px;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1c212c;
+    padding: 20px;
+    border: 1px solid #646b79;
+    border-radius: 5px;
+  }
+
+  li button {
+    height: 40px;
+    width: 100px;
+    padding: 0;
+  }
+</style>
+
+</html>

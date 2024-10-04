@@ -28,18 +28,24 @@
       data() {
         return {
           texte: '',
-          message: ''
+          message: '',
+          t: null
         }
       },
-      watch:{
-        texte(value){
-          if(value.indexOf('ici') !=  -1){
-            this.message = `Le mot "ici" a ete detecte`
+      watch: {
+        texte(value) {
+          // si mon message est afficher alors je supprime mon setTimeout parce que c'est lui qui vas supprimer mon message
+          if (this.message) {
+            clearInterval(t);
           }
-          else {
-            this.message = `Le mot "ici" n'a pas ete detecte`
-          }
+          this.message = 'user is tiping...';
+          t = setTimeout(() => {
+            this.message = ''
+          }, 1000)
         }
+      },
+      methods: {
+
       }
     });
 
