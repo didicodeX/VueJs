@@ -14,27 +14,24 @@
 
 <body class="bg-gray-100 p-6">
   <div id="app">
-    <bonjour/>
-
+    <!-- <bonjour/> -->
+    <compteur/>
   </div>
 
   <script>
     const app = Vue.createApp({
+    });
+    // app.component("Bonjour",{
+    //   template: `<div>Bomjour</div>`
+    // });
+    app.component("compteur", {
       data() {
         return {
-
+          nbClick: 0
         }
       },
-      methods: {
-        
-      },
-      mounted() {
-
-      }
+      template: '<button @click="nbClick++">{{nbClick}}</button>'
     });
-    app.component("Bonjour",{
-      template: '<div>Bomjour</div>'
-    })
 
     app.mount('#app');
   </script>
