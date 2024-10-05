@@ -1,11 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Vue - router</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <script src="https://unpkg.com/vue-router@4"></script>
 </head>
+
 <body>
-  
+  <div id="app" class="container">
+    <h1>Premiere application SPA</h1>
+    <ul>
+      <li><router-link to="/page1">Page1</router-link></li>
+      <li><router-link to="/page2">Page2</router-link></li>
+      <li><router-link to="/page3">Page3</router-link></li>
+    </ul>
+    <router-view></router-view>
+  </div>
 </body>
+<script>
+  const Page1 = {
+    template: `<div>Bienvenu sur la page 1</div>`
+  }
+  const Page2 = {
+    template: `<div>Bienvenu sur la page 2</div>`
+  }
+  const Page3 = {
+    template: `<div>Bienvenu sur la page 3</div>`
+  }
+  const router = VueRouter.createRouter({
+    history: VueRouter.createWebHistory(),
+    routes:[
+      {
+        path: '/',
+        redirect: '/page1'
+      },
+      {
+        path: '/page1',
+        component: Page1
+      },
+      {
+        path: '/page2',
+        component: Page2
+      },
+      {
+        path: '/page3',
+        component: Page3
+      },
+    ]
+  })
+  const app = Vue.createApp({
+  });
+  app.use(router)
+  app.mount(`#app`);
+</script>
+
+<style>
+  ul li {
+    list-style: none;
+    cursor: pointer;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .router-link-active {
+    color: brown;
+    text-decoration: underline;
+  }
+</style>
 </html>
